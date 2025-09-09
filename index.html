@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>С Днём Рождения, Мама!</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Marck+Script&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Кнопка музыки -->
+    <div class="music-btn-container">
+        <button id="musicBtn" class="music-btn">
+            <i class="fas fa-music"></i> Включить праздничную музыку
+        </button>
+    </div>
+
+    <!-- Главный экран -->
+    <header id="main">
+        <div class="hearts-container"></div>
+        <div class="container">
+            <h1 class="main-title">С Днём Рождения, <span class="highlight">Мама</span>!</h1>
+            <p class="subtitle">Ты самая лучшая на свете!</p>
+            <div class="scroll-down">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Навигация -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="#main">В начало поздравления</a></li>
+            <li><a href="#wishes">Пожелания</a></li>
+            <li><a href="#video">Видеопоздравление</a></li>
+            <li><a href="#chat">Чат с праздничным ботом</a></li>
+        </ul>
+    </nav>
+
+    <!-- Раздел пожеланий -->
+    <section id="wishes" class="section">
+        <div class="container">
+            <h2>Пожелания</h2>
+            <div class="wishes-container">
+                <div class="wish-card">
+                    <div class="wish-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Здоровья</h3>
+                    <p>Крепкого здоровья, бодрости духа и прекрасного самочувствия каждый день!</p>
+                </div>
+                <div class="wish-card">
+                    <div class="wish-icon">
+                        <i class="fas fa-smile"></i>
+                    </div>
+                    <h3>Счастья</h3>
+                    <p>Пусть каждый день приносит радость, улыбки и приятные воспоминания!</p>
+                </div>
+                <div class="wish-card">
+                    <div class="wish-icon">
+                        <i class="fas fa-sun"></i>
+                    </div>
+                    <h3>Удачи</h3>
+                    <p>Пусть удача сопутствует во всех начинаниях и жизненных ситуациях!</p>
+                </div>
+            </div>
+            <div class="personal-wish">
+                <h3>От всего сердца:</h3>
+                <p>Дорогая мама, в твой день рождения я хочу пожелать тебе самого светлого, доброго и прекрасного. Ты - самая лучшая и я бесконечно благодарен тебе за всё! С днем рождения!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Фотогалерея -->
+    <section id="gallery" class="section">
+        <div class="container">
+            <h2>🥳🥳🥳</h2>
+            <div class="gallery-container">
+                <div class="gallery-item">
+                    <div class="gallery-item">
+    <img src="photo_2025-09-10_01-50-51.jpg" alt="Описание изображения">
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Видеопоздравление -->
+    <section id="video" class="section">
+        <div class="container">
+            <h2>Видеопоздравление</h2>
+            <div class="video-container">
+                <div class="video-placeholder">
+                   <video controls class="custom-video">
+                <source src="img-3195mov-vzrunc.mp4" type="video/mp4">
+                Ваш браузер не поддерживает видео.
+            </video>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция чата с ботом -->
+    <section id="chat" class="section">
+        <div class="container">
+            <h2>Чат с праздничным ботом</h2>
+            <div class="chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message bot-message">
+                        <div class="message-content">
+                            <p>Привет, Марина Александровна! Я твой праздничный бот. Напиши мне:</p>
+                            <ul>
+                                <li>Какой сегодня праздник?</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="userInput" placeholder="Напишите сообщение...">
+                    <button id="sendBtn"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <div class="container">
+            <p>С любовью, твой сын <span id="currentYear"></span></p>
+        </div>
+    </footer>
+
+    <!-- Аудио элемент -->
+    <audio id="birthdayMusic" loop>
+        <source src="Куплет 1 (1).mp4" type="audio/mpeg">
+        Ваш браузер не поддерживает аудио элемент.
+    </audio>
+
+    <!-- Конфетти -->
+    <canvas id="confetti"></canvas>
+
+     <script src="script.js"></script>
+</body>
+</html>
