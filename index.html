@@ -12,7 +12,7 @@
     <!-- Кнопка музыки -->
     <div class="music-btn-container">
         <button id="musicBtn" class="music-btn">
-            <i class="fas fa-music"></i> Включить праздничную музыку
+            <i class="fas fa-music"></i> <span class="btn-text">Включить музыку</span>
         </button>
     </div>
 
@@ -28,13 +28,21 @@
         </div>
     </header>
 
+    <!-- Мобильное меню -->
+    <div class="mobile-menu-btn" id="mobileMenuBtn">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
     <!-- Навигация -->
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
         <ul>
-            <li><a href="#main">В начало поздравления</a></li>
+            <li><a href="#main">В начало</a></li>
             <li><a href="#wishes">Пожелания</a></li>
-            <li><a href="#video">Видеопоздравление</a></li>
-            <li><a href="#chat">Чат с праздничным ботом</a></li>
+            <li><a href="#gallery">Фотографии</a></li>
+            <li><a href="#video">Видео</a></li>
+            <li><a href="#chat">Чат с ботом</a></li>
         </ul>
     </nav>
 
@@ -78,10 +86,7 @@
             <h2>🥳🥳🥳</h2>
             <div class="gallery-container">
                 <div class="gallery-item">
-                    <div class="gallery-item">
-    <img src="photo_2025-09-10_01-50-51.jpg" alt="Описание изображения">
-</div>
-                    </div>
+                    <img src="photo_2025-09-10_01-50-51.jpg" alt="Праздничное фото">
                 </div>
             </div>
         </div>
@@ -92,11 +97,12 @@
         <div class="container">
             <h2>Видеопоздравление</h2>
             <div class="video-container">
-                <div class="video-placeholder">
-                   <video controls class="custom-video">
-                <source src="img-3195mov-vzrunc.mp4" type="video/mp4">
-                Ваш браузер не поддерживает видео.
-            </video>
+                <div class="video-wrapper">
+                    <video controls class="custom-video">
+                        <source src="img-3195mov-vzrunc.mp4" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>
+                </div>
             </div>
         </div>
     </section>
@@ -140,7 +146,6 @@
     <!-- Конфетти -->
     <canvas id="confetti"></canvas>
 
-     <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
-
 </html>
