@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Инициализация переменных
     const musicBtn = document.getElementById('musicBtn');
     const audio = document.getElementById('birthdayMusic');
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navbar = document.getElementById('navbar');
     let isPlaying = false;
     const confettiCanvas = document.getElementById('confetti');
     const heartsContainer = document.querySelector('.hearts-container');
@@ -13,13 +15,13 @@ document.addEventListener('DOMContentLoaded', function() {
     musicBtn.addEventListener('click', function() {
         if (isPlaying) {
             audio.pause();
-            musicBtn.innerHTML = '<i class="fas fa-music"></i> Включить праздничную музыку';
+            musicBtn.innerHTML = '<i class="fas fa-music"></i> <span class="btn-text">Включить музыку</span>';
             isPlaying = false;
         } else {
             audio.play().catch(e => {
                 console.log('Автозапуск аудио заблокирован браузером.');
             });
-            musicBtn.innerHTML = '<i class="fas fa-pause"></i> Выключить музыку';
+            musicBtn.innerHTML = '<i class="fas fa-pause"></i> <span class="btn-text">Выключить музыку</span>';
             isPlaying = true;
             
             // Запускаем конфетти при включении музыки
@@ -27,14 +29,38 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    // Мобильное меню
+    mobileMenuBtn.addEventListener('click', function() {
+        navbar.classList.toggle('active');
+        mobileMenuBtn.classList.toggle('active');
+    });
+    
+    // Закрытие меню при клике на ссылку
+    document.querySelectorAll('.navbar a').forEach(link => {
+        link.addEventListener('click', function() {
+            navbar.classList.remove('active');
+            mobileMenuBtn.classList.remove('active');
+        });
+    });
+    
+    // Закрытие меню при клике вне его области
+    document.addEventListener('click', function(e) {
+        if (!navbar.contains(e.target) && !mobileMenuBtn.contains(e.target) && navbar.classList.contains('active')) {
+            navbar.classList.remove('active');
+            mobileMenuBtn.classList.remove('active');
+        }
+    });
+    
     // Создание эффекта конфетти
     function setupConfetti() {
+        if (!confettiCanvas) return;
+        
         const ctx = confettiCanvas.getContext('2d');
         confettiCanvas.width = window.innerWidth;
         confettiCanvas.height = window.innerHeight;
         
         const confetti = [];
-        const confettiCount = 150;
+        const confettiCount = window.innerWidth < 768 ? 80 : 150; // Меньше конфетти на мобильных
         const gravity = 0.5;
         const terminalVelocity = 5;
         const drag = 0.075;
@@ -51,8 +77,8 @@ document.addEventListener('DOMContentLoaded', function() {
             confetti.push({
                 color: colors[Math.floor(Math.random() * colors.length)],
                 dimensions: {
-                    x: Math.random() * 10 + 5,
-                    y: Math.random() * 10 + 5
+                    x: Math.random() * 8 + 4,
+                    y: Math.random() * 8 + 4
                 },
                 position: {
                     x: Math.random() * confettiCanvas.width,
@@ -64,14 +90,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     y: 1
                 },
                 velocity: {
-                    x: Math.random() * 20 - 10,
-                    y: Math.random() * 10 + 5
+                    x: Math.random() * 15 - 7.5,
+                    y: Math.random() * 8 + 4
                 }
             });
         }
         
         // Анимация конфетти
         function update() {
+            if (!confettiCanvas) return;
+            
             ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
             
             confetti.forEach((confetto, index) => {
@@ -117,27 +145,35 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Создание плавающих сердечек
     function createHearts() {
-        for (let i = 0; i < 25; i++) {
+        if (!heartsContainer) return;
+        
+        const heartCount = window.innerWidth < 768 ? 15 : 25; // Меньше сердечек на мобильных
+        
+        for (let i = 0; i < heartCount; i++) {
             createHeart();
         }
     }
     
     function createHeart() {
+        if (!heartsContainer) return;
+        
         const heart = document.createElement('div');
         heart.innerHTML = '❤️';
         heart.style.position = 'absolute';
-        heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+        heart.style.fontSize = (Math.random() * 15 + 8) + 'px';
         heart.style.opacity = Math.random() * 0.5 + 0.3;
         heart.style.left = Math.random() * 100 + 'vw';
         heart.style.top = Math.random() * 100 + 'vh';
-        heart.style.animation = `floatHeart ${Math.random() * 6 + 4}s ease-in-out infinite`;
+        heart.style.animation = `floatHeart ${Math.random() * 5 + 3}s ease-in-out infinite`;
         heartsContainer.appendChild(heart);
         
         // Удаление сердечка после завершения анимации
         setTimeout(() => {
-            heart.remove();
-            createHeart();
-        }, (Math.random() * 6 + 4) * 1000);
+            if (heart.parentNode) {
+                heart.remove();
+                createHeart();
+            }
+        }, (Math.random() * 5 + 3) * 1000);
     }
     
     // Добавление стилей для анимации сердечек
@@ -149,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 opacity: 0.7;
             }
             50% {
-                transform: translate(${Math.random() * 40 - 20}px, ${Math.random() * 40 - 20}px) rotate(${Math.random() * 20 - 10}deg);
+                transform: translate(${Math.random() * 30 - 15}px, ${Math.random() * 30 - 15}px) rotate(${Math.random() * 15 - 7.5}deg);
                 opacity: 1;
             }
             100% {
@@ -161,16 +197,20 @@ document.addEventListener('DOMContentLoaded', function() {
     document.head.appendChild(style);
     
     // Плавная прокрутка для навигации
-    document.querySelectorAll('nav a').forEach(anchor => {
+    document.querySelectorAll('nav a, .scroll-down').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            
-            window.scrollTo({
-                top: targetElement.offsetTop,
-                behavior: 'smooth'
-            });
+            if (this.getAttribute('href') && this.getAttribute('href').startsWith('#')) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            }
         });
     });
     
@@ -178,11 +218,18 @@ document.addEventListener('DOMContentLoaded', function() {
     createHearts();
     
     // Обработка изменения размера окна
-    window.addEventListener('resize', function() {
+    function handleResize() {
         if (confettiCanvas) {
             confettiCanvas.width = window.innerWidth;
             confettiCanvas.height = window.innerHeight;
         }
+    }
+    
+    // Оптимизация обработчика resize
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(handleResize, 250);
     });
     
     // Чат с ботом
@@ -192,6 +239,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Функция для добавления сообщения в чат
     function addMessage(message, isUser = false) {
+        if (!chatMessages) return;
+        
         const messageDiv = document.createElement('div');
         messageDiv.classList.add('message');
         messageDiv.classList.add(isUser ? 'user-message' : 'bot-message');
@@ -199,10 +248,21 @@ document.addEventListener('DOMContentLoaded', function() {
         const messageContent = document.createElement('div');
         messageContent.classList.add('message-content');
         
-        const messageText = document.createElement('p');
-        messageText.textContent = message;
+        // Обработка переносов строк
+        if (message.includes('\n')) {
+            message.split('\n').forEach(text => {
+                if (text.trim()) {
+                    const messageText = document.createElement('p');
+                    messageText.textContent = text;
+                    messageContent.appendChild(messageText);
+                }
+            });
+        } else {
+            const messageText = document.createElement('p');
+            messageText.textContent = message;
+            messageContent.appendChild(messageText);
+        }
         
-        messageContent.appendChild(messageText);
         messageDiv.appendChild(messageContent);
         chatMessages.appendChild(messageDiv);
         
@@ -252,10 +312,17 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Обработчик отправки сообщения
     function sendMessage() {
+        if (!userInput || !chatMessages) return;
+        
         const message = userInput.value.trim();
         if (message) {
             addMessage(message, true);
             userInput.value = '';
+            
+            // Скрытие клавиатуры на мобильных устройствах
+            if ('virtualKeyboard' in navigator || 'keyboard' in navigator) {
+                userInput.blur();
+            }
             
             // Имитация задержки ответа бота
             setTimeout(() => {
@@ -265,10 +332,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Обработчики событий
-    sendBtn.addEventListener('click', sendMessage);
-    userInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            sendMessage();
+    if (sendBtn && userInput) {
+        sendBtn.addEventListener('click', sendMessage);
+        userInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    }
+    
+    // Оптимизация для мобильных устройств - предотвращение масштабирования при фокусе
+    document.addEventListener('touchstart', function(e) {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+            // Ничего не делаем, позволяя стандартному поведению
         }
-    });
+    }, { passive: true });
 });
